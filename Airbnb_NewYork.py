@@ -95,7 +95,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 # Data source:
 data_url1 = 'https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data'
 data_url2 = 'http://insideairbnb.com/get-the-data.html'
-data_url3 = 'https://raw.githubusercontent.com/Jotaherrer/DataAnalysis/master/new_york.csv'
+data_url3 = 'https://raw.githubusercontent.com/moali811/Data-Science/main/airbnb_new_york.csv'
 data_CSV_file_url = 'https://1drv.ms/u/s!AvBIUg0IX58S5HM_gTKeNleITI-O?e=XmHljX'
 data_url1_display = f'[Data Source 1]({data_url1})'
 data_url2_display = f'[Data Source 2]({data_url2})'
