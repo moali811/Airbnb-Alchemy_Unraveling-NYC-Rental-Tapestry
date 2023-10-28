@@ -1,56 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 # # Data Analysis of New York Rentals with Python
 
-#  
-
-# By Mohamad Ali  
-# 01-07-2023
-
-# 
-# 
-
-# ## Introduction
-
-#  
-
-# In this article, we will conduct a data exploratory analysis of the "New York City Airbnb" dataset using Python and various libraries such as Pandas, Matplotlib, and Seaborn.
-# 
-# The objective of this analysis is to gain insights into the distribution of rentals, price ranges, popular locations, and provide rental recommendations along with other tools to help you decide between the best and most affordable areas based on the Airbnb dataset for New York City.
-# 
-# Our analysis will cover several key aspects, such as:
-# 
-# 
-# A. **Proportion of rentals by accommodation type:** We will create a pie chart to visually represent the proportion of rentals corresponding to each accommodation type, including entire homes/apartments, private rooms, and shared rooms.
-# 
-# B. **Distribution of rentals among the five boroughs of NY:** We will generate a bar plot to illustrate the distribution of rentals among the five boroughs of NY, namely Manhattan, Brooklyn, Queens, Bronx, and Staten Island.
-# 
-# C. **Price distribution and range:** We will use a histogram to analyze the price distribution of rentals in New York City and highlight the range of prices available for each accommodation type.
-# 
-# D. **Differentiation of prices by accommodation type:** To provide more insights into pricing trends, we will create a bar plot that distinguishes prices among the available accommodation types for each borough.
-# 
-# E. **Most popular locations to rent a lodge:** Using a bar plot, we will identify and visualize the most reviewed neighborhoods, helping us determine popular rental choices based on user reviews.
-# 
-# F. **Rental recommendations:** We will identify the most affordable rentals with the highest number of reviews for each accommodation type in a couple of neighborhoods within NY city for comparision.
-# 
-# G. **Final Map:** Visualizing the distribution of Airbnb apartments, their availability, and top venues in the reccommended neighborhood(s), to make informed decisions about where to stay or invest in real estate in New York.
-# 
-# 
-
-# 
-# 
-
-# ## Data Preparation
-
-# 
-# 
-
-# In[19]:
-
-
 # Import necessary libraries
-
 import pandas as pd
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
@@ -84,14 +34,7 @@ sns.set()
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
-
 # ### Gathering Data
-
-# In[3]:
-
-
-# Referencing our data to it's original source(s) and importing the necessary libraries.
-
 # Data source:
 data_url1 = 'https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data'
 data_url2 = 'http://insideairbnb.com/get-the-data.html'
@@ -102,41 +45,15 @@ data_url2_display = f'[Data Source 2]({data_url2})'
 data_url3_display = f'[Data Source 3]({data_url3})'
 print(f'# Data source(s):\n{data_url1_display}\n{data_url2_display}\n{data_url3_display}')
 
-
-# ### Loading Data
-
-# In[4]:
-
-
 # Load the dataset from a CSV file, utilizing the Pandas’s function .read_csv().
 airbnb_data = pd.read_csv(data_url3)
 
 
 # ### Exploring Data
 
-# Let’s take a look at the basic information of the dataset, including features, data types, columns, entries and every value available at first sight, utilizing the .info() function:
-
-# In[5]:
-
-
 # Data basic info
 print("\n# Basic information of Airbnb dataset:")
 airbnb_data.info()
-
-
-#  
-
-# As it can be seen in the Gist, the dataset contains **16** columns, **48895** entries/rows, and different data types, such as Numpy integers, Objects, and Numpy floats along with some values and nulls.
-# 
-# Among the features or columns, we can find an ID, name of the landlord, rental ID, host name, borough, and other valuable information from which we’ll extract conclusions later on.
-
-# ### Cleaning Data
-
-# Let's proceed with reviewing duplicated values and replacing “missings” or "null" values from the dataset with zero, as nulls are mostly focused in the “number of reviews” and “last review” columns and they have no useful application in our analysis:
-# 
-
-# In[6]:
-
 
 # Review duplicated values, it should return zero
 duplicated_rows = airbnb_data.duplicated()
@@ -145,61 +62,24 @@ print("\n# Number of duplicated rows: ", duplicated_rows.sum())
 # Replace missing/null values with zero
 airbnb_data.fillna(0, inplace=True)
 
-
-# Let's preview the first rows of our manipulated dataset and confirm its final shape, before we move on to the analysis:
-
-# In[7]:
+# Preview the first rows of our manipulated dataset and confirm its final shape, before we move on to the analysis:
 
 print("\n# Display the first few rows of the DataFrame:")
 print(airbnb_data.head())
 
-
-# In[8]:
-
 print("\n# Shape of the data:")
 print(airbnb_data.shape)
-
-
-#  
 
 #  ## Data Analysis & Visualization
 
 # ### Descriptive Statistics
 
-# Now that we’ve cleaned the dataset by removing unnecessary features, we can proceed with the analysis. To gain a better understanding of the distribution and characteristics of the Airbnb listings data, it is helpful to display a statistical summary. This summary inlcudes information for each numerical column in the dataset such as: counts, means, standard deviations, minimum and maximum values, as well as quartiles.
-
-# In[9]:
-
-
 print("\n# Statistical summary of the DataFrame:")
 print(airbnb_data.describe())
 
-
-#  
-
-# Based on the statistical summary, we can derive *initial* insights and observations into the dataset:
-# 
-# 1. **Price Distribution:** The prices of listings vary significantly, ranging from 0 to 10,000. The average price is 152.72, but there is a high standard deviation of 240.15. This indicates a wide range of pricing, with some listings priced much higher than the average.
-# 
-# 2. **Minimum Stay Requirement:** Listings typically have a minimum stay requirement of around 7 nights on average. However, there is considerable variation among listings, as indicated by the standard deviation of 20.51.
-# 
-# 3. **Reviews and Ratings:** Listings receive an average of 23.27 reviews, suggesting a moderate level of engagement and feedback from guests. Hosts receive approximately one review per month on average (mean of 1.09), indicating ongoing guest activity.
-# 
-# 4. **Host Listings and Availability:** On average, hosts have around 7 listings (mean of calculated_host_listings_count). This suggests the presence of hosts with multiple listings, which can impact competition and availability. The average availability throughout the year is 112.78 days, indicating that listings are generally accessible for a significant portion of the year.
-# 
-# 5. **Outliers:** Certain columns, such as price and minimum_nights, exhibit maximum values that are notably higher than the 75th percentile. This suggests the presence of outliers, where some listings have exceptionally high prices or minimum stay requirements.
-
 #  ### Visualizations
 
-# In the next stages we will further analyse and visualize the data to provide a more comprehensive understanding of rental distributions, price ranges, popular locations, and provide rental recommendations based on the Airbnb data. To start with, let's address the following questions:
-
-# #### A. What proportion of the rentals correspond to each accommodation type?
-
-# In[10]:
-
-
 # 1 - Pie chart
-
 # Specify the colors for the pie chart slices
 colors = ['darkcyan', 'steelblue', 'powderblue']
 
@@ -227,24 +107,11 @@ layout = go.Layout(
 
 # Create the figure
 fig = go.Figure(data=[pie_trace], layout=layout)
-
 # Display the plot
 fig.show()
 
 
-#  
-
-# Understanding the proportions of different accommodation types can help hosts and travelers alike in making informed decisions regarding their preferences, budget, and desired experience during their stay.
-# 
-# 
-# Our analysis revealed that **52%** of Airbnb rentals are entire homes/apartments, while **46%** are private room rentals, with shared rooms comprising only **2%** of the dataset. This indicates a strong preference for private accommodations among guests, highlighting the importance of privacy and comfort.
-
-# #### B. How are rentals distributed among the five boroughs of New York City?
-
-# In[11]:
-
 # 2 - Bar plot for rentals distribution by location
-
 # Calculate the count of rentals for each borough
 borough_counts = airbnb_data['neighbourhood_group'].value_counts().reset_index()
 borough_counts.rename(columns={'index': 'borough', 'neighbourhood_group': 'count'}, inplace=True)
@@ -271,25 +138,11 @@ layout = go.Layout(
 
 # Create the figure
 fig = go.Figure(data=[bar_trace], layout=layout)
-
 # Display the plot
 fig.show()
 
 
-
-
-#  
-
-#   
-# The distribution of rentals across the five mentioned boroughs clearly demonstrates the overwhelming popularity of **Manhattan** and **Brooklyn** as the top choices for Airbnb listings. Together, these two boroughs account for a significant majority, surpassing 40,000 rentals. This pronounced concentration indicates a strong preference among visitors to New York for accommodations situated in these vibrant and dynamic parts of New York City.
-
-# #### C. What’s the price distribution and what’s the range of fair prices available?
-
-# In[12]:
-
-
 # 3 - Histogram plot with price distribution
-
 # Extract price data and calculate descriptive statistics
 price_data = airbnb_data['price']
 price_stats = price_data.describe()
@@ -335,24 +188,11 @@ fig.update_layout(annotations=[descriptive_annotation])
 
 # Set the theme to 'plotly_white' for better visibility
 fig.update_layout(template='plotly_white')
-
 # Display the plot
 fig.show()
 
 
-#  
-
-# The price distribution of rentals in vibrant New York City exhibits a right-skewed pattern, indicating that the majority of listings are priced below USD 1,000, within the range of **USD 69-175** per night, forming a cluster of the most common prices. This sweet spot represents the interquartile range (IQR), capturing the middle 50% of prices. Meanwhile, the median price of **USD 106** indicates that half of the rentals are available below this value. On average, rentals in the city are priced at **USD 152.72**, reflecting the overall cost of accommodations.
-# 
-# However, it is worth noting that the market offers a diverse range of price options, spanning from lower-priced rentals to premium offerings. Some exceptional listings are priced as high as **USD 10,000**, representing the upper end of the price spectrum.
-
-# #### D. How do prices vary among different accommodation types in New York City?
-
-# In[13]:
-
-
 # 4 - Bar plot with price to location distribution
-
 # Group the Airbnb data by 'neighbourhood_group' and 'room_type', and calculate the mean of 'price'
 loc_price = airbnb_data.groupby(['neighbourhood_group', 'room_type'])['price'].mean().reset_index()
 
@@ -399,19 +239,7 @@ fig.update_layout(
 fig.show()
 
 
-#  
-
-# Stepping into the vibrant world of New York City's accommodations with the captivating bar plot above. It highlights the average prices for various accommodation types, unveils the mesmerizing tapestry of price distribution across the city's boroughs. As we journey through the visual symphony, it becomes apparent that certain boroughs have higher average prices across all accommodation types, while others offer more affordable options.
-# 
-# The plot unravels the crown jewel of **Manhattan**, boasting the highest average prices that reflect its allure and cosmopolitan charm. Meanwhile, **Brooklyn** and **Queens** shimmer with a diverse palette of prices, catering to a variety of tastes and budgets, with comparatively lower average prices for certain accommodation types.
-
-# #### E. Which are the most popular locations to rent a lodge?
-
-# In[14]:
-
-
 # 5 - Most reviewed spots
-
 # Sort the dataset based on the number of reviews in descending order
 review_sorted = airbnb_data.sort_values('number_of_reviews', ascending=False)
 
@@ -446,26 +274,7 @@ fig.show()
 
 
 
-#  
-
-# The graph highlights neighborhoods that have garnered a significant number of reviews, indicating their popularity among Airbnb guests. By comparing the review counts across color-coded bars representing different boroughs, we can identify the boroughs with higher review activity.
-# 
-# Pay attention to the lesser-known neighborhoods that have managed to accumulate a substantial number of reviews. These hidden gems often offer unique and memorable experiences, presenting an opportunity for travelers to discover off-the-beaten-path destinations.
-# 
 # Based on our analysis, it is evident that there is a high demand for accommodations in the boroughs of **Manhattan** and **Brooklyn**. This leads us to question the cost of staying in these locations:
-
-# #### F. Is it feasible to find affordable yet pleasant rentals in New York City?
-
-# Look no further! With just a few simple inputs, we can narrow down our rental search to the desired neighborhood. This enables us to identify the most affordable rentals among the highly reviewed options, ensuring that we find the most suitable place to stay.
-# 
-# For a vibrant and affordable experience with soul food, jazz clubs, and friendly neighbors, **Harlem** in Upper Manhattan is an excellent choice. It's diverse, welcoming, and popular among expats.
-# 
-# However, for a quieter lifestyle, endless green spaces, and yet, a budget-friendly option in Manhattan, the **Upper West Side (UWS)** is ideal. It offers great parks, family-friendly amenities, and excellent schools, making it attractive for raising kids.
-# 
-# Let's elevate the art of decision-making by comparing the results with a grouped bar chart for the most affordable prices between Harlem and Upper West Side (UWS), and through a captivating map, that seamlessly blends data and aesthetics. To discover the hidden gems and highly acclaimed accommodations that have delighted countless guests and explore the vibrant surroundings, from trendy eateries to iconic landmarks that define NYC's essence:
-
-# In[123]:
-
 
 # Foluim map with venues
 
@@ -595,6 +404,7 @@ def generate_rentals_map(rentals):
 
         <div style="text-align: center; margin-bottom: 10px;"><b>Lodge Type</b></div>
     '''
+
     for accommodation_type in accommodation_types:
         icon = icon_mapping.get(accommodation_type, 'home')
         color = 'black'
@@ -607,7 +417,6 @@ def generate_rentals_map(rentals):
         legend_html += '<hr style="margin: 5px 0;">'
 
     legend_html += '<div style="margin-top: 10px;"><hr style="margin: 5px 0;"></div>'
-
     legend_html += '''
         <div style="text-align: center; margin-bottom: 5px;"><b>Price Range</b></div>
     '''
@@ -629,7 +438,6 @@ def generate_rentals_map(rentals):
     '''
     
     legend_html += '<div style="margin-top: 10px;"><hr style="margin: 5px 0;"></div>'
-    
     legend_html += '''
         <div style="text-align: center; margin-bottom: 5px;"><b>Venues</b></div>
     '''
@@ -713,7 +521,7 @@ def generate_rentals_map(rentals):
     
     folium.LayerControl(position='topleft').add_to(rentals_map)
     
-    # Display the rentals map (in Jupyter) and save it as a HTML file
+    # Display the rentals map (for Jupyter) and save it as a HTML file
     display(rentals_map)
     map_file_path = 'rentals_map.html'
     rentals_map.save(map_file_path)
@@ -770,37 +578,3 @@ def prompt_user():
 
 # Call the prompt_user function
 prompt_user()
-
-#  
-
-#  
-
-# The map shows the distribution of Airbnb apartments in Harlem and UWS. As we embarked on our journey through these neighborhoods in Manhattan, we discovered that the rental prices vary between Harlem and UWS. The cheapest Entire Home/Apt in Harlem is priced at **USD 49** per night, while in UWS, it is **USD 75** per night.
-# 
-# However, for those seeking an affordable yet charming experience, the Private Room option emerged as the true gem in both Harlem and UWS, with prices ranging from **USD 25** to **USD 30** per night.
-# 
-# The map also shows popular attractions, restaurants, or landmarks in these areas, through the blue "circular" markers representing the top venues in each neighborhood based on the Foursquare API data, reading the venue name, category.
-# 
-# *By visualizing the distribution of Airbnb apartments, their availability, and the top venues in the desired neighborhood(s), we can make informed decisions about where to stay or invest in real estate in these neighborhoods.*
-
-#  
-
-# # Conclusion: 
-
-#   
-
-# In this article, we have explored various aspects of the New York City rental market using Airbnb data:
-# 
-# We began by analyzing the **distribution of rentals** among the five boroughs of New York City. The bar plot visualization provided insights into the popularity of each borough, allowing us to make informed decisions about our preferred location.
-# 
-# Next, we delved into the **pricing patterns** across different accommodation types and neighborhoods. The bar plot with price-to-location distribution showcased the average prices for various room types in each borough, giving us an understanding of the cost implications associated with our accommodation choices.
-# 
-# Additionally, we examined the **most reviewed** spots, highlighting the neighborhoods that have received the highest number of reviews. This information can guide us in selecting popular locations that have been well-received by previous guests.
-# 
-# By providing these insights and visualizations, we hope to facilitate your decision-making process and enable you to optimize your lodging experience in New York City.
-# 
-# If you found this article helpful or have any thoughts to share, please feel free to reach out. Your feedback and engagement motivate us to continue sharing valuable information.
-# 
-# **Safe travels and happy renting!**
-
-#  
