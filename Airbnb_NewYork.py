@@ -340,8 +340,8 @@ def plot_grouped_bar_chart(neighborhoods, cheapest_rentals):
 # Function to get nearby venues using Foursquare API
 def get_nearby_venues(lat, lon):
     # Foursquare API credentials
-    CLIENT_ID = 'JQ5A2C1YB2GJUEZ0FGISIVQNYGLZ1GM2X4AAANLKF45WW5G2'
-    CLIENT_SECRET = 'ELHXLFL0GKHNFUBEG3R0ADSYRNFQ4F5KTJJWQQQZO4TTYUHG'
+    CLIENT_ID = 'JQ5***********5G2'  # Hidden for security puposes
+    CLIENT_SECRET = 'ELH****************HG'   # Hidden for security puposes
     VERSION = '20230704'  # Use the current date as the version
     LIMIT = 5
     radius = 500
