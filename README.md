@@ -12,10 +12,7 @@ By Mohamad Ali
 <br><br>
 
 ## Data Gathering
- - The dataset was collected from multiple sources, including:
-   - Kaggle: https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data
-   - Inside Airbnb: http://insideairbnb.com/get-the-data.html
-   - The data was then imported into a Pandas DataFrame for analysis: https://raw.githubusercontent.com/moali811/Data-Science/main/airbnb_new_york.csv
+ - The dataset was collected from multiple sources, including [Kaggle](https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data), [Inside Airbnb](http://insideairbnb.com/get-the-data.html). The [data](https://raw.githubusercontent.com/moali811/Data-Science/main/airbnb_new_york.csv) was then imported into a Pandas DataFrame for analysis.
  <br><br>
  
 ## 🏡 Your Journey Through NYC Rentals: 
@@ -66,7 +63,7 @@ By Mohamad Ali
 Whether you're a host dreaming of higher bookings or a traveler in search of the ultimate NYC experience, our analysis is your passport to the perfect stay. Dive in, explore, and let your NYC adventure begin – the city that never sleeps awaits your unique touch!
 <br><br>
 
-*Note:* For a deeper dive into the magic, head to our repository for the full immersive experience! 🚀🗽
+*Note:* For a deeper dive into the magic, head to my [repository](https://github.com/moali811?tab=repositories) for the full immersive experience! 🚀🗽
 <br><br>
 <br><br>
 
